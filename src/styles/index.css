@@ -1,0 +1,331 @@
+/* ═══════════════════════════════════════════
+   SplitBite — "Tactile Receipt" Design System
+   Aesthetic: Warm paper receipt meets playful diner
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* ─── Color Palette: Diner Receipt ─── */
+  --bg-primary: #f5f0e8;
+  --bg-secondary: #ece6d9;
+  --bg-card: #fffdf7;
+  --bg-card-hover: #fff9ee;
+  --bg-elevated: #e8e1d3;
+  --bg-glass: rgba(255, 253, 247, 0.85);
+  --bg-receipt: #faf7f0;
+
+  --ink-primary: #2c2416;
+  --ink-secondary: #6b5e4f;
+  --ink-muted: #9e9283;
+  --ink-faint: #c4b9a8;
+
+  --accent-tomato: #d44527;
+  --accent-tomato-soft: rgba(212, 69, 39, 0.12);
+  --accent-tomato-glow: rgba(212, 69, 39, 0.25);
+  --accent-sage: #5a7a5a;
+  --accent-sage-soft: rgba(90, 122, 90, 0.12);
+  --accent-mustard: #c4952a;
+  --accent-mustard-soft: rgba(196, 149, 42, 0.15);
+  --accent-espresso: #3d2b1f;
+  --accent-cream: #e8d5b5;
+
+  --border-pencil: rgba(44, 36, 22, 0.12);
+  --border-stamp: rgba(212, 69, 39, 0.3);
+
+  /* ─── Typography ─── */
+  --font-hand: 'Caveat', cursive;
+  --font-display: 'Gabarito', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --fs-hero: clamp(2.5rem, 8vw, 4.5rem);
+  --fs-h1: clamp(1.75rem, 5vw, 2.75rem);
+  --fs-h2: clamp(1.3rem, 3.5vw, 1.75rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 0.9375rem;
+  --fs-small: 0.8125rem;
+  --fs-tiny: 0.6875rem;
+  --fs-receipt: 0.875rem;
+
+  /* ─── Spacing ─── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+
+  /* ─── Radii ─── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* ─── Shadows ─── */
+  --shadow-paper: 0 1px 3px rgba(44, 36, 22, 0.08), 0 4px 12px rgba(44, 36, 22, 0.06);
+  --shadow-card: 0 2px 8px rgba(44, 36, 22, 0.07), 0 8px 24px rgba(44, 36, 22, 0.05);
+  --shadow-lifted: 0 8px 30px rgba(44, 36, 22, 0.12), 0 2px 8px rgba(44, 36, 22, 0.08);
+  --shadow-stamp: 2px 2px 0 rgba(212, 69, 39, 0.15);
+
+  /* ─── Transitions ─── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0.5, 1.5, 0.5, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-display);
+  background: var(--bg-primary);
+  color: var(--ink-primary);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  line-height: 1.55;
+  position: relative;
+}
+
+/* ─── Paper grain texture overlay ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+/* ─── Warm ambient gradient ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 85%, rgba(212, 69, 39, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(90, 122, 90, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(196, 149, 42, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--ink-primary);
+}
+
+button {
+  font-family: var(--font-display);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input, textarea {
+  font-family: var(--font-mono);
+  color: var(--ink-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--accent-tomato);
+  text-decoration: none;
+}
+
+/* ─── App Container — visible receipt paper ─── */
+.app-container {
+  max-width: 440px;
+  margin: var(--space-xl) auto;
+  padding: var(--space-xl) var(--space-lg);
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-receipt);
+  border: 1px solid var(--border-pencil);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  min-height: calc(100dvh - var(--space-3xl));
+}
+
+/* Torn receipt bottom edge */
+.app-container::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 6px,
+    var(--bg-primary) 6px,
+    var(--bg-primary) 12px
+  );
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    min-height: 100dvh;
+  }
+  .app-container::after {
+    display: none;
+  }
+}
+
+/* ─── Step Header ─── */
+.step-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  position: relative;
+}
+
+/* ─── Step Indicator (receipt-style dashes) ─── */
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-lg);
+}
+
+.step-dot {
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ink-faint);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.step-dot.active {
+  width: 36px;
+  background: var(--accent-tomato);
+  border-radius: 2px;
+  box-shadow: var(--shadow-stamp);
+}
+
+.step-dot.done {
+  background: var(--accent-sage);
+}
+
+/* ─── Step Title — handwritten feel ─── */
+.step-title {
+  font-family: var(--font-hand);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--accent-espresso);
+  position: relative;
+  display: inline-block;
+}
+
+/* Underline scribble effect */
+.step-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 5%;
+  right: 5%;
+  height: 3px;
+  background: var(--accent-tomato);
+  opacity: 0.3;
+  border-radius: 2px;
+  transform: rotate(-0.5deg);
+}
+
+.step-subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Step Transitions ─── */
+.step-view {
+  animation: stepSlideUp var(--duration-slow) var(--ease-out);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes stepSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ─── Receipt-style dashed dividers ─── */
+.receipt-divider {
+  border: none;
+  border-top: 2px dashed var(--border-pencil);
+  margin: var(--space-lg) 0;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink-faint);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-muted);
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: var(--accent-tomato-soft);
+  color: var(--accent-espresso);
+}
